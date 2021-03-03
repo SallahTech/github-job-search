@@ -7,6 +7,7 @@ import Header from './Header'
 import Search from './Search'
 import Results from './Results'
 import JobDetails from './JobDetails'
+import JobsContext from '../context/jobs'
 
 const HomePage = props => {
   const [results, setResults] = useState([])
@@ -53,11 +54,19 @@ const HomePage = props => {
     jobDetails = results.find(job => job.id === jobId)
   }
 
+  const value = {
+    results,
+    details: jobDetails,
+    onSearch: handleSearch,
+    onItemClick: handleItemClick,
+    onResetPage: handleResetPage,
+  }
+
   return (
-    <div>
+    <JobsContext.Provider value={value}>
       <div className={`${page === 'details' && 'hide'}`}>
         <Header />
-        <Search onSearch={handleSearch} />
+        <Search />
         {!_.isEmpty(errors) && (
           <div className='errorMsg'>
             <p>{errors.error}</p>
@@ -65,13 +74,13 @@ const HomePage = props => {
         )}
         {isLoading && <p className='loading'>Loading...</p>}
         <div>
-          <Results results={results} onItemClick={handleItemClick} />
+          <Results />
         </div>
       </div>
       <div className={`${page === 'home' && 'hide'}`}>
-        <JobDetails details={jobDetails} onResetPage={handleResetPage} />
+        {page === 'details' && <JobDetails />}
       </div>
-    </div>
+    </JobsContext.Provider>
   )
 }
 

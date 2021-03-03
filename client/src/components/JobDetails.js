@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import JobsContext from '../context/jobs'
 
-const JobDetails = ({ details, onResetPage }) => {
+const JobDetails = () => {
+  const { details, onResetPage } = useContext(JobsContext)
   const {
     type,
     title,
@@ -11,6 +13,10 @@ const JobDetails = ({ details, onResetPage }) => {
     company_logo,
     how_to_apply,
   } = details
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className='job-details'>
@@ -41,10 +47,10 @@ const JobDetails = ({ details, onResetPage }) => {
               {company_url}
             </a>
           </div>
-        </div>
-        <div className='how_to_apply'>
-          <h3>How to apply</h3>
-          <div dangerouslySetInnerHTML={{ __html: how_to_apply }}> </div>
+          <div className='how-to-apply'>
+            <h3>How to apply</h3>
+            <div dangerouslySetInnerHTML={{ __html: how_to_apply }}></div>
+          </div>
         </div>
       </div>
     </div>

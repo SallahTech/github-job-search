@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import moment from 'moment'
+import JobsContext from '../context/jobs'
 
 const JobItem = props => {
+  const { onItemClick } = useContext(JobsContext)
   const {
     id,
     type,
@@ -11,7 +13,6 @@ const JobItem = props => {
     title,
     company_logo,
     index,
-    onItemClick,
   } = props
 
   return (
